@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 
 # 打开浏览器，与浏览器建立会话
@@ -5,4 +7,6 @@ from selenium import webdriver
 
 driver = webdriver.Chrome()
 
-driver
+driver.get("https://www.baidu.com")
+time.sleep(1)
+driver.close()
