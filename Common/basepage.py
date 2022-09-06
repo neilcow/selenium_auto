@@ -21,6 +21,15 @@ class BasePage:
             logging.exception("等待元素可见失败：")
             raise
 
+    # 等待元素可点击
+    def wait_ele_clickable(self, loc, img_name, timeout=20, poll_fre=0.5):
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=poll_fre).until(EC.element_to_be_clickable(loc))
+        except:
+            self.save_page_shot(img_name)
+            logging.exception("等待元素可见失败： ")
+            raise
+
     # 查找元素
     def get_element(self, loc, img_name):
         logging.info("在{} 查找元素： {}。".format(img_name, loc))
@@ -32,6 +41,18 @@ class BasePage:
             raise
         else:
             return ele
+
+    # 查找元素们
+    def get_elements(self, loc, img_name):
+        logging.info("在{} 查找所有匹配的元素： {}。".format(img_name, loc))
+        try:
+            eles = self.driver.find_elements(*loc)
+        except:
+            self.save_page_shot(img_name)
+            logging.exception("查找元素失败")
+            raise
+        else:
+            return eles
 
     # 点击元素
     def click_element(self, loc, img_name, timeout=20, poll_fre=0.5):
@@ -86,6 +107,25 @@ class BasePage:
         else:
             logging.info("文本值为：{}".format(text))
             return text
+
+    # 切换到新的窗口
+
+    # iframe切换
+    def switch_to_iframe(self, locator):
+        # 等待
+        try:
+            WebDriverWait(self.driver, 20).until(EC.frame_to_be_available_and_switch_to_it(locator))
+        except:
+            pass
+        # 切换
+
+    # alert切换
+
+    # js执行 - js语句
+
+    # 滚动条操作
+
+    # 上传
 
     def save_page_shot(self, img_name):
         # 将图片存储到outputs的的screenshot目录下
